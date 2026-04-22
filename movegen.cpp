@@ -45,4 +45,33 @@ U64 generateWhiteBishopMoves(){
 
 }
 
-U64 generateWhiteRookMoves(){}
+U64 generateWhiteRookMoves(){
+    U64 moves = 0ULL ;
+    U64 rooks = WR ;
+    while(rooks){
+        int pos = __builtin_ctzll(rooks);
+        rooks = rooks & (rooks - 1);
+        for (int i = pos+8 ; i < 64 ; i+=8){//top
+            U64 to = 1ULL << i ;
+            moves |= to ;
+            if(to & allOcc) break ;
+        }
+        for(int i = pos+8 ; i <64 ; i+=8){//down
+            U64 to = 1ULL >> i ;
+            moves|= to ;
+            if(to & allOcc) break ;
+        }
+        for(int i = pos+1 ; i % 8 != 0 ; i++){//right
+            U64 to = 1ULL >> i ;
+            moves|= to ;
+            if(to & allOcc) break ;
+        }
+        for(int i = pos+1 ; i % 8 != 0 ; i++){//left
+            U64 to = 1ULL << i ;
+            moves|= to ;
+            if(to & allOcc) break ;
+        }
+    }
+    moves = moves & ~whiteOcc ;
+    return moves ;
+}

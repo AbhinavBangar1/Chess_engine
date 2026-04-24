@@ -59,17 +59,17 @@ U64 generateWhiteRookMoves(){
             moves |= to ;
             if(to & allOcc) break ;
         }
-        for(int i = pos+8 ; i <64 ; i+=8){//down
-            U64 to = 1ULL >> i ;
+        for(int i = pos-8 ; i >= 0 ; i -= 8){//down
+            U64 to = 1ULL << i ;
             moves|= to ;
             if(to & allOcc) break ;
         }
         for(int i = pos+1 ; i % 8 != 0 ; i++){//right
-            U64 to = 1ULL >> i ;
+            U64 to = 1ULL << i ;
             moves|= to ;
             if(to & allOcc) break ;
         }
-        for(int i = pos+1 ; i % 8 != 0 ; i++){//left
+        for(int i = pos - 1 ; i%8!=7 && i >= 0 ; i--){//left
             U64 to = 1ULL << i ;
             moves|= to ;
             if(to & allOcc) break ;

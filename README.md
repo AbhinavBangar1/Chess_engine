@@ -12,4 +12,4 @@
     h g f e d c b a
 ```
 
-The board is flipped about the Positive y axis making it a little confusing for visualizing left and right of a piece .
+The board is flipped about the Positive y axis making it a little confusing for visualizing left and right of a piece . This is known as `Little-endian rank-file mapping(LERF)` .

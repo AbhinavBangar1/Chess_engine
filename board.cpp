@@ -25,7 +25,7 @@ char board[8][8] = {
 void initBitboards() {
     for (int row = 0; row < 8; row++) {
         for (int col = 0; col < 8; col++) {
-            int sq = row * 8 + col;
+            int sq = (7 - row) * 8 + col;
             U64 bit = 1ULL << sq;
 
             switch (board[row][col]) {
@@ -54,7 +54,7 @@ void initBitboards() {
 }
 
 void printBitboard(U64 bb) {
-    for (int rank = 0; rank < 8; rank++) {
+    for (int rank = 7; rank >= 0; rank--){
         for (int file = 0; file < 8; file++) {
             int sq = rank * 8 + file;
             cout << ((bb >> sq) & 1ULL) << " ";
@@ -64,17 +64,17 @@ void printBitboard(U64 bb) {
     cout << endl;
 }
 
-int main() {
-    initBitboards();
-    cout << "White Pawns:\n";
-    printBitboard(WP);
-    cout << "Black Pawns:\n";
-    printBitboard(BP);
-    cout << "White Occupancy:\n";
-    printBitboard(whiteOcc);
-    cout << "Black Occupancy:\n";
-    printBitboard(blackOcc);
-    cout << "All Occupancy:\n";
-    printBitboard(allOcc);
-    return 0;
-}
+// int main() {
+//     initBitboards();
+//     cout << "White Pawns:\n";
+//     printBitboard(WP);
+//     cout << "Black Pawns:\n";
+//     printBitboard(BP);
+//     cout << "White Occupancy:\n";
+//     printBitboard(whiteOcc);
+//     cout << "Black Occupancy:\n";
+//     printBitboard(blackOcc);
+//     cout << "All Occupancy:\n";
+//     printBitboard(allOcc);
+//     return 0;
+// }

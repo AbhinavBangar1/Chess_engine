@@ -11,6 +11,8 @@ const U64 notGHFile = 0x3f3f3f3f3f3f3f3fULL;
 const U64 whitePawnInitial = 0x000000000000FF00ULL ;
 const U64 blackPawnInitial = 0x00FF000000000000ULL ;
 
+
+
 U64 generateWhitePawnMoves(){
     U64 singlePush = (WP << 8) & ~allOcc ;
     U64 doublePush = ((singlePush & whitePawnInitial) << 16) & ~allOcc ;
@@ -39,11 +41,12 @@ U64 generateWhiteKnightMoves(){
     knightMoves |= (WN & notAFile ) >> 17 ;
     knightMoves |= (WN & notHFile ) >> 15 ;
     knightMoves = knightMoves & ~whiteOcc ; //allowing to capture the blacks (hehe :))   
+    return knightMoves ;
 }
 
-U64 generateWhiteBishopMoves(){
+// U64 generateWhiteBishopMoves(){
 
-}
+// }
 
 U64 generateWhiteRookMoves(){
     U64 moves = 0ULL ;
@@ -74,4 +77,17 @@ U64 generateWhiteRookMoves(){
     }
     moves = moves & ~whiteOcc ;
     return moves ;
+}
+
+int main(){
+    initBitboards();
+    cout << "Black moves : \n";
+    printBitboard(generateBlackPawnMoves());
+    cout << "White moves : \n";
+    printBitboard(generateWhitePawnMoves());
+    cout << "White knight moves : \n";
+    printBitboard(generateWhiteKnightMoves());
+    cout << "white rook moves : \n";
+    printBitboard(generateWhiteRookMoves()) ;
+    return 0 ;
 }

@@ -54,23 +54,30 @@ U64 generateWhiteRookMoves(){
     while(rooks){
         int pos = __builtin_ctzll(rooks);
         rooks = rooks & (rooks - 1);
-        for (int i = pos+8 ; i < 64 ; i+=8){//top
-            U64 to = 1ULL << i ;
+        int rank = pos / 8 ;
+        int file = pos % 8 ;
+
+        for (int i = rank+1 ; i < 8 ; i++){//top
+            int t = i * 8 + file ;
+            U64 to = 1ULL << t ;
             moves |= to ;
             if(to & allOcc) break ;
         }
-        for(int i = pos-8 ; i >= 0 ; i -= 8){//down
-            U64 to = 1ULL << i ;
+        for(int i = rank-1 ; i >= 0 ; i --){//down
+            int t = i * 8 + file ;
+            U64 to = 1ULL << t ;
             moves|= to ;
             if(to & allOcc) break ;
         }
-        for(int i = pos+1 ; i % 8 != 0 ; i++){//right
-            U64 to = 1ULL << i ;
+        for(int i = file + 1 ; i < 8 ; i++){//right
+            int t = rank * 8 + i ;
+            U64 to = 1ULL << t ;
             moves|= to ;
             if(to & allOcc) break ;
         }
-        for(int i = pos - 1 ; i%8!=7 && i >= 0 ; i--){//left
-            U64 to = 1ULL << i ;
+        for(int i = file - 1 ; i >= 0 ; i--){//left
+            int t = rank * 8 + i ;
+            U64 to = 1ULL << t ;
             moves|= to ;
             if(to & allOcc) break ;
         }

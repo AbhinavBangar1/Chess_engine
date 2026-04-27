@@ -44,9 +44,51 @@ U64 generateWhiteKnightMoves(){
     return knightMoves ;
 }
 
-// U64 generateWhiteBishopMoves(){
+U64 generateWhiteBishopMoves(){
+    U64 moves = 0ULL ;
+    U64 bishops = WB ;
+    while(bishops){
+        int pos = __builtin_ctzll(bishops) ;
+        bishops = bishops & (bishops - 1) ;
+        int rank = pos / 8 ;
+        int file = pos % 8 ;
 
-// }
+        for(int i = 1 ; i < 8 ; i++){
+            if((file - i) < 0 || (rank + i) >= 8) break ;
+            int top_right = (rank + i) * 8 + (file - i) ;
+            if(top_right >= 0) {
+                moves |= (1ULL <<top_right) ;
+                if((1ULL << top_right) & allOcc) break ;
+            } 
+        }
+        for(int i = 1 ; i < 8 ; i++){
+            if((rank + i) >= 8 || (file + i) >= 8) break;
+            int top_left = (rank + i) * 8 + (file + i ) ;
+            if(top_left >= 0) {
+                moves |= (1ULL <<top_left) ;
+                if((1ULL << top_left) & allOcc) break ;
+            } 
+        }
+        for(int i = 1 ; i < 8 ; i++){
+            if((rank - i) < 0 || (file + i) >= 8 ) break ;
+            int bottom_left = (rank - i) * 8 + (file + i ) ;
+            if(bottom_left >= 0) {
+                moves |= (1ULL <<bottom_left) ;
+                if((1ULL <<bottom_left) & allOcc) break ;
+            } 
+        }
+        for(int i = 1 ; i < 8 ; i++){
+            if((rank - i) < 0 || (file - i) < 0 ) break ;
+            int bottom_right = (rank - i) * 8 + (file - i ) ;
+            if(bottom_right >= 0) {
+                moves |= (1ULL <<bottom_right) ;
+                if((1ULL <<bottom_right) & allOcc) break ;
+            } 
+        }
+    }
+    moves = moves & ~whiteOcc ;
+    return moves ; 
+}
 
 U64 generateWhiteRookMoves(){
     U64 moves = 0ULL ;
@@ -88,13 +130,7 @@ U64 generateWhiteRookMoves(){
 
 int main(){
     initBitboards();
-    cout << "Black moves : \n";
-    printBitboard(generateBlackPawnMoves());
-    cout << "White moves : \n";
-    printBitboard(generateWhitePawnMoves());
-    cout << "White knight moves : \n";
-    printBitboard(generateWhiteKnightMoves());
-    cout << "white rook moves : \n";
-    printBitboard(generateWhiteRookMoves()) ;
+    cout << "white Bishop moves : \n";
+    printBitboard(generateWhiteBishopMoves()) ;
     return 0 ;
 }

@@ -45,6 +45,20 @@ U64 generateWhiteKnightMoves(){
     return knightMoves ;
 }
 
+U64 generateBlackKnightMoves(){
+    U64 knightMoves = 0ULL ;
+    knightMoves |= (BN & notGHFile ) << 6 ;
+    knightMoves |= (BN & notABFile ) << 10 ;
+    knightMoves |= (BN & notAFile ) << 15 ;
+    knightMoves |= (BN & notHFile ) << 17 ;
+    knightMoves |= (BN & notGHFile ) >> 10 ;
+    knightMoves |= (BN & notABFile ) >> 6 ;
+    knightMoves |= (BN & notAFile ) >> 17 ;
+    knightMoves |= (BN & notHFile ) >> 15 ;
+    knightMoves = knightMoves & ~blackOcc ;    
+    return knightMoves ;
+}
+
 U64 generateWhiteBishopMoves(){
     U64 moves = 0ULL ;
     U64 bishops = WB ;
@@ -131,7 +145,7 @@ U64 generateWhiteRookMoves(){
 
 int main(){
     initBitboards();
-    cout << "Black Pawn moves : \n";
-    printBitboard(generateBlackPawnMoves()) ;
+    cout << "Black knight moves : \n";
+    printBitboard(generateBlackKnightMoves()) ;
     return 0 ;
 }

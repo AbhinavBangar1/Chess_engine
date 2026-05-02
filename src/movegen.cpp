@@ -18,7 +18,9 @@ U64 generateWhitePawnMoves(){
     doublePush = (doublePush << 8) & ~allOcc ;
     U64 leftCapture = (WP << 7) & notAFile & blackOcc ;
     U64 rightCapture = (WP << 9) & notHFile & blackOcc ;
-    return singlePush | doublePush |leftCapture | rightCapture;
+    U64 epLeft  = (WP << 7) & notAFile & enPassantBB;
+    U64 epRight = (WP << 9) & notHFile & enPassantBB;
+    return singlePush | doublePush |leftCapture | rightCapture | epLeft | epRight;
 }
 
 U64 generateBlackPawnMoves(){
@@ -27,7 +29,9 @@ U64 generateBlackPawnMoves(){
     doublePush = (doublePush >> 8) & ~allOcc ;
     U64 leftCapture = (BP >> 9) & notAFile & whiteOcc ;
     U64 rightCapture = (BP >> 7) & notHFile & whiteOcc ;
-    return singlePush | doublePush |leftCapture | rightCapture;
+    U64 epLeft  = (BP >> 7) & notAFile & enPassantBB;
+    U64 epRight = (BP >> 9) & notHFile & enPassantBB;
+    return singlePush | doublePush |leftCapture | rightCapture | epLeft | epRight;
 }
 
 U64 generateWhiteKnightMoves(){

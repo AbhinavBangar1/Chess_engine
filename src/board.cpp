@@ -6,7 +6,7 @@ using U64 = uint64_t;
 
 U64 WP = 0ULL, WN = 0ULL, WB = 0ULL, WR = 0ULL, WQ = 0ULL, WK = 0ULL;
 U64 BP = 0ULL, BN = 0ULL, BB = 0ULL, BR = 0ULL, BQ = 0ULL, BK = 0ULL;
-
+U64 enPassantBB = 0ULL ;
 U64 whiteOcc = 0ULL;
 U64 blackOcc = 0ULL;
 U64 allOcc   = 0ULL;

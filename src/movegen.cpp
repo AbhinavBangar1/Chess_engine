@@ -230,9 +230,152 @@ U64 generateBlackRookMoves(){
     return moves ;    
 }
 
+U64 generateWhiteQueenMoves(){
+    U64 moves = 0ULL ;
+    U64 queen = WQ ;
+    while(queen){
+        int pos = __builtin_ctzll(queen);
+        queen = queen & (queen - 1);
+        int rank = pos / 8 ;
+        int file = pos % 8 ;
+
+        for (int i = rank+1 ; i < 8 ; i++){//top
+            int t = i * 8 + file ;
+            U64 to = 1ULL << t ;
+            moves |= to ;
+            if(to & allOcc) break ;
+        }
+        for(int i = rank-1 ; i >= 0 ; i --){//down
+            int t = i * 8 + file ;
+            U64 to = 1ULL << t ;
+            moves|= to ;
+            if(to & allOcc) break ;
+        }
+        for(int i = file + 1 ; i < 8 ; i++){//right
+            int t = rank * 8 + i ;
+            U64 to = 1ULL << t ;
+            moves|= to ;
+            if(to & allOcc) break ;
+        }
+        for(int i = file - 1 ; i >= 0 ; i--){//left
+            int t = rank * 8 + i ;
+            U64 to = 1ULL << t ;
+            moves|= to ;
+            if(to & allOcc) break ;
+        }
+        for(int i = 1 ; i < 8 ; i++){
+            if((file - i) < 0 || (rank + i) >= 8) break ;
+            int top_right = (rank + i) * 8 + (file - i) ;
+            if(top_right >= 0) {
+                moves |= (1ULL <<top_right) ;
+                if((1ULL << top_right) & allOcc) break ;
+            } 
+        }
+        for(int i = 1 ; i < 8 ; i++){
+            if((rank + i) >= 8 || (file + i) >= 8) break;
+            int top_left = (rank + i) * 8 + (file + i ) ;
+            if(top_left >= 0) {
+                moves |= (1ULL <<top_left) ;
+                if((1ULL << top_left) & allOcc) break ;
+            } 
+        }
+        for(int i = 1 ; i < 8 ; i++){
+            if((rank - i) < 0 || (file + i) >= 8 ) break ;
+            int bottom_left = (rank - i) * 8 + (file + i ) ;
+            if(bottom_left >= 0) {
+                moves |= (1ULL <<bottom_left) ;
+                if((1ULL <<bottom_left) & allOcc) break ;
+            } 
+        }
+        for(int i = 1 ; i < 8 ; i++){
+            if((rank - i) < 0 || (file - i) < 0 ) break ;
+            int bottom_right = (rank - i) * 8 + (file - i ) ;
+            if(bottom_right >= 0) {
+                moves |= (1ULL <<bottom_right) ;
+                if((1ULL <<bottom_right) & allOcc) break ;
+            } 
+        }
+    }
+    moves = moves & ~whiteOcc ;
+    return moves ;  
+}
+
+U64 generateBlackQueenMoves(){
+    U64 moves = 0ULL ;
+    U64 queen = BQ ;
+    while(queen){
+        int pos = __builtin_ctzll(queen);
+        queen = queen & (queen - 1);
+        int rank = pos / 8 ;
+        int file = pos % 8 ;
+
+        for (int i = rank+1 ; i < 8 ; i++){//top
+            int t = i * 8 + file ;
+            U64 to = 1ULL << t ;
+            moves |= to ;
+            if(to & allOcc) break ;
+        }
+        for(int i = rank-1 ; i >= 0 ; i --){//down
+            int t = i * 8 + file ;
+            U64 to = 1ULL << t ;
+            moves|= to ;
+            if(to & allOcc) break ;
+        }
+        for(int i = file + 1 ; i < 8 ; i++){//right
+            int t = rank * 8 + i ;
+            U64 to = 1ULL << t ;
+            moves|= to ;
+            if(to & allOcc) break ;
+        }
+        for(int i = file - 1 ; i >= 0 ; i--){//left
+            int t = rank * 8 + i ;
+            U64 to = 1ULL << t ;
+            moves|= to ;
+            if(to & allOcc) break ;
+        }
+        for(int i = 1 ; i < 8 ; i++){
+            if((file - i) < 0 || (rank + i) >= 8) break ;
+            int top_right = (rank + i) * 8 + (file - i) ;
+            if(top_right >= 0) {
+                moves |= (1ULL <<top_right) ;
+                if((1ULL << top_right) & allOcc) break ;
+            } 
+        }
+        for(int i = 1 ; i < 8 ; i++){
+            if((rank + i) >= 8 || (file + i) >= 8) break;
+            int top_left = (rank + i) * 8 + (file + i ) ;
+            if(top_left >= 0) {
+                moves |= (1ULL <<top_left) ;
+                if((1ULL << top_left) & allOcc) break ;
+            } 
+        }
+        for(int i = 1 ; i < 8 ; i++){
+            if((rank - i) < 0 || (file + i) >= 8 ) break ;
+            int bottom_left = (rank - i) * 8 + (file + i ) ;
+            if(bottom_left >= 0) {
+                moves |= (1ULL <<bottom_left) ;
+                if((1ULL <<bottom_left) & allOcc) break ;
+            } 
+        }
+        for(int i = 1 ; i < 8 ; i++){
+            if((rank - i) < 0 || (file - i) < 0 ) break ;
+            int bottom_right = (rank - i) * 8 + (file - i ) ;
+            if(bottom_right >= 0) {
+                moves |= (1ULL <<bottom_right) ;
+                if((1ULL <<bottom_right) & allOcc) break ;
+            } 
+        }
+    }
+    moves = moves & ~blackOcc ;
+    return moves ;  
+}
+
+
 int main(){
     initBitboards();
-    cout << "Black Rook moves : \n";
-    printBitboard(generateBlackRookMoves()) ;
+    cout << "White queen moves : \n";
+    printBitboard(generateWhiteQueenMoves()) ;
+    cout << "Black queen moves : \n";
+    printBitboard(generateBlackQueenMoves()) ;
     return 0 ;
 }

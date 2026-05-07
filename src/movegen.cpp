@@ -400,7 +400,8 @@ U64 generateWhiteKingMoves(){
     moves = up | left | right | down | top_right | top_left | bottom_left | bottom_right;
     cout << "moves_right : \n";
     printBitboard(moves) ;
-    U64 checks = generateBlackRookMoves() | generateBlackBishopMoves() | generateBlackKnightMoves() | generateBlackPawnMoves() | generateBlackQueenMoves() ;
+    U64 checks = generateBlackRookMoves() | generateBlackBishopMoves() | 
+                 generateBlackKnightMoves() | generateBlackPawnMoves() | generateBlackQueenMoves() ;
     cout << "Checks : \n";
     printBitboard(checks) ;
     moves = moves & ~checks ;
@@ -438,7 +439,8 @@ U64 generateBlackKingMoves(){
     moves = up | left | right | down | top_right | top_left | bottom_left | bottom_right;
     cout << "moves_right : \n";
     printBitboard(moves) ;
-    U64 checks = generateWhiteRookMoves() | generateWhiteBishopMoves() | generateWhiteKnightMoves() | generateWhitePawnMoves() | generateWhiteQueenMoves() ;
+    U64 checks = generateWhiteRookMoves() | generateWhiteBishopMoves() | 
+                generateWhiteKnightMoves() | generateWhitePawnMoves() | generateWhiteQueenMoves() ;
     cout << "Checks : \n";
     printBitboard(checks) ;
     moves = moves & ~checks ;
@@ -446,11 +448,11 @@ U64 generateBlackKingMoves(){
     return moves ;
 }
 
-int main(){
-    initBitboards();
-    cout << "Black king moves : \n";
-    printBitboard(generateBlackKingMoves()) ;
-    // cout << "Black queen moves : \n";
-    // printBitboard(generateBlackQueenMoves()) ;
-    return 0 ;
-}
+// int main(){
+//     initBitboards();
+//     cout << "Black king moves : \n";
+//     printBitboard(generateBlackKingMoves()) ;
+//     // cout << "Black queen moves : \n";
+//     // printBitboard(generateBlackQueenMoves()) ;
+//     return 0 ;
+// }

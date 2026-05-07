@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdint>
+#include <cctype>
 using namespace std;
 
 using U64 = uint64_t;
@@ -12,11 +13,11 @@ U64 blackOcc = 0ULL;
 U64 allOcc   = 0ULL;
 
 char board[8][8] = {
-    {'r','n','b','q','.','b','n','r'},
+    {'r','n','b','q','k','b','n','r'},
     {'p','p','p','p','p','p','p','p'},
     {'.','.','.','.','.','.','.','.'},
-    {'k','.','.','q','.','.','.','.'},
-    {'.','.','.','.','Q','.','.','.'},
+    {'.','.','.','.','.','.','.','.'},
+    {'.','.','.','.','.','.','.','.'},
     {'.','.','.','.','.','.','.','.'},
     {'P','P','P','P','P','P','P','P'},
     {'R','N','B','Q','K','B','N','R'}
@@ -53,6 +54,13 @@ void initBitboards() {
     allOcc   = whiteOcc | blackOcc;
 }
 
+void clearBitboards() {
+    WP = WN = WB = WR = WQ = WK = 0ULL;
+    BP = BN = BB = BR = BQ = BK = 0ULL;
+    whiteOcc = blackOcc = allOcc = 0ULL;
+    enPassantBB = 0ULL;
+}
+
 void printBitboard(U64 bb) {
     for (int rank = 7; rank >= 0; rank--){
         for (int file = 0; file < 8; file++) {
@@ -63,6 +71,47 @@ void printBitboard(U64 bb) {
     }
     cout << endl;
 }
+
+// using fen for testing
+void loadFEN(string fen){
+    clearBitboards() ;
+    int row = 0 ; 
+    int col = 0 ;
+    for(char c : fen){
+        if(c == ' ') break ;
+        if(c == '/'){
+            row++ ;
+            col = 0 ; 
+            continue ;
+        }
+        if(isdigit(c)){
+            int emp = c -'0' ;
+            for(int i = 0 ; i < emp ; i++ ){
+                board[row][col] = '.' ;
+                col++;
+            }
+            continue ;
+        }
+        board[row][col] = c ;
+        col++;
+    }
+    initBitboards();
+}
+
+void test(string tname , U64 got , U64 expect){
+    if(got == expect){
+        cout << tname << " Passed\n" ;
+    }
+    else{
+        cout << tname << " Failed\n" ;
+        cout << "Got:\n" ;
+        printBitboard(got) ;
+        cout << "Expected:\n" ;
+        printBitboard(expect) ;
+    }
+}
+
+
 
 // int main() {
 //     initBitboards();
